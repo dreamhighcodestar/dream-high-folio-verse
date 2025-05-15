@@ -1,11 +1,31 @@
-// Update this page (the content is just a fallback if you fail to update the page)
 
-const Index = () => {
+import React, { useEffect } from 'react';
+import ThreeBackground from '../components/ThreeBackground';
+import Header from '../components/Header';
+import Hero from '../components/Hero';
+import About from '../components/About';
+import Experience from '../components/Experience';
+import Skills from '../components/Skills';
+import Contact from '../components/Contact';
+import Footer from '../components/Footer';
+
+const Index: React.FC = () => {
+  useEffect(() => {
+    document.title = "Ivan Tereshchenko | Full-Stack Developer";
+  }, []);
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
+    <div className="min-h-screen bg-gradient-to-b from-[#050713] to-[#0c1a36] overflow-hidden relative">
+      <ThreeBackground />
+      
+      <div className="relative z-10">
+        <Header />
+        <Hero />
+        <About />
+        <Experience />
+        <Skills />
+        <Contact />
+        <Footer />
       </div>
     </div>
   );
