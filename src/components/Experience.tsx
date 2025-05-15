@@ -234,6 +234,9 @@ const Experience: React.FC = () => {
         </div>
 
         <div className="mt-16">
+          <h2 className="text-3xl md:text-4xl font-bold mb-12 text-white">
+            <span className="text-blue-500">#</span> Education
+          </h2>
           <div 
             className="bg-blue-900/20 border border-blue-900/30 rounded-lg p-6 md:p-8 cursor-pointer hover:bg-blue-900/30 transition-colors"
             onClick={() => setShowEducationDetails(true)}
