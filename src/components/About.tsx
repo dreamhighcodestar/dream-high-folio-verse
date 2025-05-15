@@ -1,5 +1,6 @@
 
 import React from 'react';
+import AnimatedImage from './AnimatedImage';
 
 const About: React.FC = () => {
   return (
@@ -12,7 +13,7 @@ const About: React.FC = () => {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="relative">
             <div className="relative z-10 rounded-lg overflow-hidden shadow-xl">
-              <img 
+              <AnimatedImage 
                 src="/lovable-uploads/169db3fd-53f8-46d7-92bd-7dd911814e1b.png" 
                 alt="Ivan at work" 
                 className="w-full h-auto"

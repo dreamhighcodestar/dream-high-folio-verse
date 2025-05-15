@@ -1,5 +1,6 @@
 
 import React from 'react';
+import AnimatedImage from './AnimatedImage';
 
 const Hero: React.FC = () => {
   return (
@@ -29,7 +30,7 @@ const Hero: React.FC = () => {
                 Get in touch
               </a>
               <a 
-                href="#experience" 
+                href="#projects" 
                 className="border border-gray-600 hover:border-gray-400 text-gray-300 hover:text-white px-6 py-3 rounded-md transition-colors font-medium"
               >
                 View my work
@@ -41,10 +42,10 @@ const Hero: React.FC = () => {
             <div className="relative w-64 h-64 md:w-96 md:h-96">
               <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full opacity-20 blur-2xl"></div>
               <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-blue-500/20">
-                <img 
+                <AnimatedImage 
                   src="/lovable-uploads/ae96836f-f532-4f21-9be2-96f9d544d0b6.png" 
-                  alt="Ivan Tereshchenko" 
-                  className="w-full h-full object-cover"
+                  alt="Ivan Tereshchenko"
+                  className="rounded-full"
                 />
               </div>
             </div>

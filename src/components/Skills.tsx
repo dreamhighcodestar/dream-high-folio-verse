@@ -1,28 +1,66 @@
 
 import React from 'react';
+import AnimatedImage from './AnimatedImage';
 
 interface SkillCategory {
   name: string;
-  skills: string[];
+  skills: {
+    name: string;
+    icon: string;
+  }[];
 }
 
 const Skills: React.FC = () => {
   const skillCategories: SkillCategory[] = [
     {
       name: "Frontend",
-      skills: ["React", "Next.js", "Vue.js", "Three.js", "Angular", "JavaScript", "TypeScript", "HTML5", "CSS3", "Tailwind CSS", "WordPress"]
+      skills: [
+        { name: "React", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
+        { name: "Next.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" },
+        { name: "Vue.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg" },
+        { name: "Three.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/threejs/threejs-original.svg" },
+        { name: "Angular", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg" },
+        { name: "JavaScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
+        { name: "TypeScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
+        { name: "HTML5", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
+        { name: "CSS3", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
+        { name: "Tailwind CSS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg" },
+        { name: "WordPress", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wordpress/wordpress-plain.svg" }
+      ]
     },
     {
       name: "Backend",
-      skills: ["Node.js", "Express", "Laravel", "PHP", "CodeIgniter", "NestJS"]
+      skills: [
+        { name: "Node.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
+        { name: "Express", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" },
+        { name: "Laravel", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-plain.svg" },
+        { name: "PHP", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-plain.svg" },
+        { name: "CodeIgniter", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/codeigniter/codeigniter-plain.svg" },
+        { name: "NestJS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nestjs/nestjs-plain.svg" }
+      ]
     },
     {
       name: "Database",
-      skills: ["MySQL", "MongoDB", "MariaDB"]
+      skills: [
+        { name: "MySQL", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" },
+        { name: "MongoDB", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" },
+        { name: "MariaDB", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" }
+      ]
     },
     {
       name: "Other",
-      skills: ["API Integration with AI Tools", "Webhook and Automation Tools", "AI Content Generation", "Shopify", "REST API", "Authentication", "CRUD", "WebSockets", "Responsive Design", "Testing"]
+      skills: [
+        { name: "API Integration", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/graphql/graphql-plain.svg" },
+        { name: "Automation Tools", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jenkins/jenkins-original.svg" },
+        { name: "AI Content", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg" },
+        { name: "Shopify", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/shopify/shopify-original.svg" },
+        { name: "REST API", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg" },
+        { name: "Authentication", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/oauth/oauth-original.svg" },
+        { name: "CRUD", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" },
+        { name: "WebSockets", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/socketio/socketio-original.svg" },
+        { name: "Responsive Design", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" },
+        { name: "Testing", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jest/jest-plain.svg" }
+      ]
     }
   ];
 
@@ -36,19 +74,23 @@ const Skills: React.FC = () => {
         <div className="grid md:grid-cols-2 gap-8 items-start">
           <div className="space-y-8">
             {skillCategories.map((category, idx) => (
-              <div key={idx}>
-                <h3 className="text-xl font-semibold text-white mb-4 flex items-center">
+              <div key={idx} className="bg-gradient-to-br from-blue-900/20 to-blue-900/5 border border-blue-900/40 rounded-lg p-6">
+                <h3 className="text-xl font-semibold text-white mb-6 flex items-center">
                   <span className="inline-block w-2 h-2 bg-blue-500 mr-2"></span>
                   {category.name}
                 </h3>
-                <div className="flex flex-wrap gap-2">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                   {category.skills.map((skill, i) => (
-                    <span 
-                      key={i} 
-                      className="px-3 py-1.5 bg-blue-900/20 text-blue-300 rounded-md text-sm border border-blue-900/30"
-                    >
-                      {skill}
-                    </span>
+                    <div key={i} className="flex flex-col items-center group">
+                      <div className="w-12 h-12 mb-2 bg-blue-900/30 rounded-lg p-2 transition-all duration-300 transform group-hover:scale-110">
+                        <img 
+                          src={skill.icon} 
+                          alt={skill.name}
+                          className="w-full h-full object-contain"
+                        />
+                      </div>
+                      <span className="text-xs text-blue-300 text-center">{skill.name}</span>
+                    </div>
                   ))}
                 </div>
               </div>
@@ -58,10 +100,10 @@ const Skills: React.FC = () => {
           <div className="relative">
             <div className="relative z-10">
               <div className="w-full h-full overflow-hidden rounded-lg shadow-xl">
-                <img 
+                <AnimatedImage 
                   src="/lovable-uploads/a7cde80a-cb92-475a-9077-63f598e6d3c1.png" 
-                  alt="Ivan Tereshchenko" 
-                  className="w-full h-auto object-cover"
+                  alt="Ivan Tereshchenko"
+                  className="w-full h-auto"
                 />
               </div>
             </div>
@@ -70,7 +112,7 @@ const Skills: React.FC = () => {
         </div>
 
         <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-gradient-to-br from-blue-900/20 to-blue-900/10 p-6 rounded-lg border border-blue-900/20">
+          <div className="bg-gradient-to-br from-blue-900/20 to-blue-900/10 p-6 rounded-lg border border-blue-900/20 transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-blue-900/20">
             <div className="flex items-center space-x-3 mb-4">
               <div className="p-2 bg-blue-500/20 rounded-lg">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -82,7 +124,7 @@ const Skills: React.FC = () => {
             <p className="text-gray-400">Building beautiful, responsive interfaces that provide excellent user experiences across all devices.</p>
           </div>
           
-          <div className="bg-gradient-to-br from-blue-900/20 to-blue-900/10 p-6 rounded-lg border border-blue-900/20">
+          <div className="bg-gradient-to-br from-blue-900/20 to-blue-900/10 p-6 rounded-lg border border-blue-900/20 transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-blue-900/20">
             <div className="flex items-center space-x-3 mb-4">
               <div className="p-2 bg-blue-500/20 rounded-lg">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -94,7 +136,7 @@ const Skills: React.FC = () => {
             <p className="text-gray-400">Developing secure, scalable, and efficient server-side solutions that power complex applications.</p>
           </div>
           
-          <div className="bg-gradient-to-br from-blue-900/20 to-blue-900/10 p-6 rounded-lg border border-blue-900/20">
+          <div className="bg-gradient-to-br from-blue-900/20 to-blue-900/10 p-6 rounded-lg border border-blue-900/20 transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-blue-900/20">
             <div className="flex items-center space-x-3 mb-4">
               <div className="p-2 bg-blue-500/20 rounded-lg">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
