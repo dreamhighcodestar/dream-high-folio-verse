@@ -16,7 +16,7 @@ const Index: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#050713] to-[#0c1a36] overflow-hidden relative">
+    <div className="min-h-screen bg-gradient-to-b from-[#050713]/80 to-[#0c1a36]/80 overflow-hidden relative">
       <ThreeBackground />
       
       <div className="relative z-10">
