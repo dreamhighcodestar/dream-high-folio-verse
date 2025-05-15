@@ -1,6 +1,8 @@
 
 import React from 'react';
 import AnimatedImage from './AnimatedImage';
+import { Button } from './ui/button';
+import { Download } from 'lucide-react';
 
 const Hero: React.FC = () => {
   return (
@@ -22,7 +24,7 @@ const Hero: React.FC = () => {
               working with tools like Strapi, Contentful, Shopify, and WooCommerce.
             </p>
             
-            <div className="flex space-x-4 pt-4">
+            <div className="flex flex-wrap gap-4 pt-4">
               <a 
                 href="#contact" 
                 className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md transition-colors font-medium"
@@ -35,6 +37,14 @@ const Hero: React.FC = () => {
               >
                 View my work
               </a>
+              <Button 
+                variant="secondary" 
+                className="flex items-center gap-2 bg-blue-950/50 hover:bg-blue-900/60"
+                onClick={() => window.open('/resume.pdf', '_blank')}
+              >
+                <Download size={18} />
+                Download Resume
+              </Button>
             </div>
           </div>
           
