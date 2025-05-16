@@ -43,7 +43,7 @@ const Experience: React.FC = () => {
         "Integrated headless CMS platforms like Strapi and Contentful.",
         "Focused on architecture, performance, and cross-team delivery of high-quality solutions."
       ],
-      image: "/lovable-uploads/54aa4a3c-d004-4b18-81f4-24b583c49334.png",
+      image: "/lovable-uploads/9af9d2b5-35c1-4c39-8395-060570167bdc.png",
       details: {
         projects: [
           "Enterprise finance management system with real-time analytics and reporting",
@@ -70,7 +70,7 @@ const Experience: React.FC = () => {
         "Developed plugins and themes, integrated Stripe/PayPal.",
         "Prioritized responsiveness, SEO, and performance."
       ],
-      image: "/lovable-uploads/30ffc5ed-1824-406f-bc23-a5cdb81925e0.png",
+      image: "/lovable-uploads/5c034d24-a6db-4244-87fd-c2d77198fd98.png",
       details: {
         projects: [
           "Custom WordPress e-commerce platform for fashion retailer",
@@ -97,7 +97,7 @@ const Experience: React.FC = () => {
         "Developed reusable React components.",
         "Improved SEO and accessibility for better reach and usability."
       ],
-      image: "/lovable-uploads/98f7be9f-b081-48e8-b7fc-107570bae7f3.png",
+      image: "/lovable-uploads/fa6d9c26-38a7-457e-bd55-4f7326a9f667.png",
       details: {
         projects: [
           "Corporate websites for financial institutions",
@@ -119,11 +119,11 @@ const Experience: React.FC = () => {
   const education: EducationItem = {
     degree: "Bachelor's Degree in Software Engineering",
     institution: "Lviv Polytechnic National University",
-    institutionLogo: "/lovable-uploads/6c1c300e-5fd1-422a-9d24-2eefcd8e9afe.png",
+    institutionLogo: "/lovable-uploads/ac5301d6-7fd5-468e-949c-dfa0ff0abcbc.png",
     period: "2012–2016",
     description: "Comprehensive software engineering education with focus on software development methodologies, algorithms, data structures, and practical programming skills.",
     gpa: "3.8 / 4.0",
-    image: "/lovable-uploads/6c1c300e-5fd1-422a-9d24-2eefcd8e9afe.png",
+    image: "/lovable-uploads/93b09091-b536-4f7f-9950-22149026a95d.png",
     details: {
       courses: [
         "Advanced Algorithms and Data Structures",
@@ -285,9 +285,9 @@ const Experience: React.FC = () => {
             <div>
               <div className="aspect-video overflow-hidden rounded-lg mb-6 bg-white/5 flex items-center justify-center">
                 <AnimatedImage
-                  src={selectedExperience?.companyLogo || ''}
+                  src={selectedExperience?.image || ''}
                   alt={selectedExperience?.company || ''}
-                  className="w-4/5 h-4/5 object-contain"
+                  className="w-full h-full object-cover"
                 />
               </div>
               
@@ -357,9 +357,9 @@ const Experience: React.FC = () => {
             <div>
               <div className="aspect-video overflow-hidden rounded-lg mb-6 bg-white/5 flex items-center justify-center">
                 <AnimatedImage
-                  src={education.institutionLogo}
+                  src={education.image}
                   alt={education.institution}
-                  className="w-4/5 h-4/5 object-contain"
+                  className="w-full h-full object-cover"
                 />
               </div>
               
