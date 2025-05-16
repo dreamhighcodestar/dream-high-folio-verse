@@ -36,14 +36,14 @@ const Experience: React.FC = () => {
     {
       title: "Senior Full-Stack Developer",
       company: "Intellias",
-      companyLogo: "/lovable-uploads/662b99c4-f9e4-47f8-b29c-5c5ab2daf70f.png",
+      companyLogo: "/lovable-uploads/54aa4a3c-d004-4b18-81f4-24b583c49334.png",
       period: "Jan 2021 to Mar 2025",
       description: [
         "Led scalable finance and e-commerce app development using React.js, Laravel, MySQL.",
         "Integrated headless CMS platforms like Strapi and Contentful.",
         "Focused on architecture, performance, and cross-team delivery of high-quality solutions."
       ],
-      image: "/lovable-uploads/662b99c4-f9e4-47f8-b29c-5c5ab2daf70f.png",
+      image: "/lovable-uploads/54aa4a3c-d004-4b18-81f4-24b583c49334.png",
       details: {
         projects: [
           "Enterprise finance management system with real-time analytics and reporting",
@@ -63,14 +63,14 @@ const Experience: React.FC = () => {
     {
       title: "Full-Stack Developer – CMS & E-commerce",
       company: "Program-Ace",
-      companyLogo: "/lovable-uploads/58c56fe5-d4d3-4c32-98b2-c8d8ec49a943.png",
+      companyLogo: "/lovable-uploads/30ffc5ed-1824-406f-bc23-a5cdb81925e0.png",
       period: "Mar 2018 to Dec 2020",
       description: [
         "Built CMS & e-commerce platforms with WordPress, React, Laravel.",
         "Developed plugins and themes, integrated Stripe/PayPal.",
         "Prioritized responsiveness, SEO, and performance."
       ],
-      image: "/lovable-uploads/58c56fe5-d4d3-4c32-98b2-c8d8ec49a943.png",
+      image: "/lovable-uploads/30ffc5ed-1824-406f-bc23-a5cdb81925e0.png",
       details: {
         projects: [
           "Custom WordPress e-commerce platform for fashion retailer",
@@ -90,14 +90,14 @@ const Experience: React.FC = () => {
     {
       title: "Front-End Developer",
       company: "Miratech",
-      companyLogo: "/lovable-uploads/09078728-35d9-4783-9d28-15947c1490bd.png",
+      companyLogo: "/lovable-uploads/98f7be9f-b081-48e8-b7fc-107570bae7f3.png",
       period: "Jan 2016 to Feb 2018",
       description: [
         "Created responsive websites using HTML, CSS, JavaScript, WordPress.",
         "Developed reusable React components.",
         "Improved SEO and accessibility for better reach and usability."
       ],
-      image: "/lovable-uploads/09078728-35d9-4783-9d28-15947c1490bd.png",
+      image: "/lovable-uploads/98f7be9f-b081-48e8-b7fc-107570bae7f3.png",
       details: {
         projects: [
           "Corporate websites for financial institutions",
@@ -119,11 +119,11 @@ const Experience: React.FC = () => {
   const education: EducationItem = {
     degree: "Bachelor's Degree in Software Engineering",
     institution: "Lviv Polytechnic National University",
-    institutionLogo: "/lovable-uploads/45cc8efd-c724-4c9b-b7c3-c09e75c3a556.png",
+    institutionLogo: "/lovable-uploads/6c1c300e-5fd1-422a-9d24-2eefcd8e9afe.png",
     period: "2012–2016",
     description: "Comprehensive software engineering education with focus on software development methodologies, algorithms, data structures, and practical programming skills.",
     gpa: "3.8 / 4.0",
-    image: "/lovable-uploads/45cc8efd-c724-4c9b-b7c3-c09e75c3a556.png",
+    image: "/lovable-uploads/6c1c300e-5fd1-422a-9d24-2eefcd8e9afe.png",
     details: {
       courses: [
         "Advanced Algorithms and Data Structures",
@@ -199,7 +199,7 @@ const Experience: React.FC = () => {
                     <AnimatedImage
                       src={exp.companyLogo}
                       alt={`${exp.company} logo`}
-                      className="w-full h-full object-cover rounded-full"
+                      className="w-full h-full object-contain p-2"
                     />
                   </div>
                 </div>
@@ -242,11 +242,11 @@ const Experience: React.FC = () => {
             onClick={() => setShowEducationDetails(true)}
           >
             <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
-              <div className="w-24 h-24 rounded-full overflow-hidden flex-shrink-0 border-4 border-blue-500/20">
+              <div className="w-24 h-24 rounded-full overflow-hidden flex-shrink-0 border-4 border-blue-500/20 bg-white/5">
                 <AnimatedImage 
                   src={education.institutionLogo} 
                   alt={education.institution}
-                  className="w-full h-full object-cover rounded-full" 
+                  className="w-full h-full object-contain p-2" 
                 />
               </div>
               
@@ -283,11 +283,11 @@ const Experience: React.FC = () => {
           
           <div className="grid md:grid-cols-2 gap-6 mt-4">
             <div>
-              <div className="aspect-video overflow-hidden rounded-lg mb-6">
+              <div className="aspect-video overflow-hidden rounded-lg mb-6 bg-white/5 flex items-center justify-center">
                 <AnimatedImage
-                  src={selectedExperience?.image || ''}
+                  src={selectedExperience?.companyLogo || ''}
                   alt={selectedExperience?.company || ''}
-                  className="w-full h-full object-cover"
+                  className="w-4/5 h-4/5 object-contain"
                 />
               </div>
               
@@ -355,11 +355,11 @@ const Experience: React.FC = () => {
           
           <div className="grid md:grid-cols-2 gap-6 mt-4">
             <div>
-              <div className="aspect-video overflow-hidden rounded-lg mb-6">
+              <div className="aspect-video overflow-hidden rounded-lg mb-6 bg-white/5 flex items-center justify-center">
                 <AnimatedImage
-                  src={education.image}
+                  src={education.institutionLogo}
                   alt={education.institution}
-                  className="w-full h-full object-cover"
+                  className="w-4/5 h-4/5 object-contain"
                 />
               </div>
               

@@ -26,19 +26,21 @@ const Hero: React.FC = () => {
             
             <div className="flex flex-wrap gap-4 pt-4">
               <Button 
-                className="bg-blue-600 hover:bg-blue-700 text-white font-medium"
+                className="bg-blue-600 hover:bg-blue-700 text-white font-medium h-10"
+                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
               >
                 Get in touch
               </Button>
               <Button 
                 variant="outline" 
-                className="border border-gray-600 hover:border-gray-400 text-gray-300 hover:text-white font-medium"
+                className="border border-gray-600 hover:border-gray-400 text-gray-300 hover:text-white font-medium h-10"
+                onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
               >
                 View my work
               </Button>
               <Button 
                 variant="secondary" 
-                className="flex items-center gap-2 bg-blue-950/50 hover:bg-blue-900/60 font-medium"
+                className="flex items-center gap-2 bg-blue-950/50 hover:bg-blue-900/60 font-medium h-10"
                 onClick={() => window.open('/resume.pdf', '_blank')}
               >
                 <Download size={18} />
