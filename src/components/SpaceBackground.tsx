@@ -255,22 +255,24 @@ const SpaceBackground: React.FC = () => {
       createBrightStar(0.4, new THREE.Color(1.0, 1.0, 0.9), 90, -60, -160),
     ];
     
-    // Mouse movement and parallax effect
+    // Mouse movement and parallax effect - REDUCED INFLUENCE
     let mouseX = 0;
     let mouseY = 0;
     let targetMouseX = 0;
     let targetMouseY = 0;
     
     window.addEventListener('mousemove', (event) => {
-      targetMouseX = (event.clientX / window.innerWidth - 0.5) * 2;
-      targetMouseY = (event.clientY / window.innerHeight - 0.5) * -2;
+      // Reduced mouse sensitivity by 50%
+      targetMouseX = (event.clientX / window.innerWidth - 0.5);
+      targetMouseY = (event.clientY / window.innerHeight - 0.5) * -1;
     });
     
-    // Touch movement for mobile
+    // Touch movement for mobile - REDUCED INFLUENCE
     window.addEventListener('touchmove', (event) => {
       if (event.touches.length > 0) {
-        targetMouseX = (event.touches[0].clientX / window.innerWidth - 0.5) * 2;
-        targetMouseY = (event.touches[0].clientY / window.innerHeight - 0.5) * -2;
+        // Reduced touch sensitivity by 50%
+        targetMouseX = (event.touches[0].clientX / window.innerWidth - 0.5);
+        targetMouseY = (event.touches[0].clientY / window.innerHeight - 0.5) * -1;
       }
     });
     
@@ -280,11 +282,12 @@ const SpaceBackground: React.FC = () => {
       scrollY = window.scrollY;
     });
     
-    // Device orientation for mobile
+    // Device orientation for mobile - REDUCED INFLUENCE
     window.addEventListener('deviceorientation', (event) => {
       if (event.beta && event.gamma) {
-        targetMouseX = (event.gamma / 45) * 1.5; // -45 to 45 degrees
-        targetMouseY = (event.beta / 45) * 1.5;  // -45 to 45 degrees
+        // Reduced orientation sensitivity by 50%
+        targetMouseX = (event.gamma / 90) * 0.75;
+        targetMouseY = (event.beta / 90) * 0.75;
       }
     });
     
@@ -292,75 +295,75 @@ const SpaceBackground: React.FC = () => {
     let time = 0;
     
     const animate = () => {
-      time += 0.003;
+      time += 0.001; // Slowed down the autonomous time progression by 66%
       
-      // Smooth mouse movement
-      mouseX += (targetMouseX - mouseX) * 0.05;
-      mouseY += (targetMouseY - mouseY) * 0.05;
+      // Reduced mouse movement influence by making the easing slower
+      mouseX += (targetMouseX - mouseX) * 0.02; // Reduced from 0.05
+      mouseY += (targetMouseY - mouseY) * 0.02; // Reduced from 0.05
       
-      // Autonomous movement
-      const autonomousX = Math.sin(time) * 0.5;
-      const autonomousY = Math.cos(time * 0.7) * 0.5;
+      // Autonomous movement - slowed down but increased in influence relative to mouse
+      const autonomousX = Math.sin(time * 0.5) * 0.7; // Increased autonomous influence
+      const autonomousY = Math.cos(time * 0.35) * 0.7; // Increased autonomous influence
       
-      // Combined movement factors
-      const moveX = mouseX + autonomousX;
-      const moveY = mouseY + autonomousY;
+      // Combined movement factors - mouse has less influence
+      const moveX = (mouseX * 0.3) + autonomousX; // Mouse has 30% influence
+      const moveY = (mouseY * 0.3) + autonomousY; // Mouse has 30% influence
       
-      // Camera movement - more dramatic
-      camera.position.x = moveX * 15;
-      camera.position.y = moveY * 15;
+      // Camera movement - more dramatic but smoother
+      camera.position.x = moveX * 10;
+      camera.position.y = moveY * 10;
       camera.lookAt(scene.position);
       
-      // Rotate star layers at different speeds for parallax
+      // Rotate star layers at different speeds for parallax - SLOWED DOWN
       starLayers.forEach((layer, i) => {
-        const speedFactor = 1 - (i * 0.2);
-        layer.rotation.x = time * 0.1 * speedFactor;
-        layer.rotation.y = time * 0.15 * speedFactor;
+        const speedFactor = 0.4 - (i * 0.08); // Slowed down by 60%
+        layer.rotation.x = time * 0.04 * speedFactor; // Reduced from 0.1
+        layer.rotation.y = time * 0.06 * speedFactor; // Reduced from 0.15
         
-        // Parallax effect on mouse move
-        layer.position.x = -moveX * (20 + i * 30);
-        layer.position.y = -moveY * (20 + i * 30);
+        // Parallax effect on mouse move - REDUCED
+        layer.position.x = -moveX * (10 + i * 15); // Reduced from 20+i*30
+        layer.position.y = -moveY * (10 + i * 15); // Reduced from 20+i*30
         
-        // Scroll parallax
+        // Scroll parallax - KEPT THE SAME
         layer.position.y -= scrollY * 0.01 * (i + 1);
       });
       
-      // Animate nebulas - pulsate and rotate
+      // Animate nebulas - pulsate and rotate - SLOWED DOWN
       nebulas.forEach((nebula, i) => {
-        const t = time + i;
-        // Scale pulsation
-        const scaleFactor = 1 + Math.sin(t * 0.5) * 0.1;
+        const t = time * 0.5 + i; // Slowed down
+        // Scale pulsation - reduced range
+        const scaleFactor = 1 + Math.sin(t * 0.25) * 0.05; // Reduced from t*0.5 and *0.1
         nebula.scale.set(scaleFactor, scaleFactor, scaleFactor);
         
-        // Slow rotation
-        nebula.rotation.x = t * 0.05;
-        nebula.rotation.y = t * 0.08;
-        nebula.rotation.z = t * 0.03;
+        // Slow rotation - SLOWED FURTHER
+        nebula.rotation.x = t * 0.02; // Reduced from 0.05
+        nebula.rotation.y = t * 0.03; // Reduced from 0.08
+        nebula.rotation.z = t * 0.01; // Reduced from 0.03
         
-        // Subtle position changes
-        nebula.position.x += Math.sin(t * 0.3) * 0.1;
-        nebula.position.y += Math.cos(t * 0.2) * 0.1;
+        // Subtle position changes - KEPT SUBTLE
+        nebula.position.x += Math.sin(t * 0.15) * 0.05; // Reduced from t*0.3 and *0.1
+        nebula.position.y += Math.cos(t * 0.1) * 0.05; // Reduced from t*0.2 and *0.1
         
-        // Parallax on mouse move
-        nebula.position.x -= moveX * 30;
-        nebula.position.y -= moveY * 30;
+        // Parallax on mouse move - REDUCED
+        nebula.position.x -= moveX * 15; // Reduced from 30
+        nebula.position.y -= moveY * 15; // Reduced from 30
       });
       
-      // Animate galaxies - rotate and move
+      // Animate galaxies - rotate and move - SLOWED DOWN
       galaxies.forEach((galaxy, i) => {
-        galaxy.rotation.x = time * 0.02;
-        galaxy.rotation.y = time * 0.03;
-        galaxy.rotation.z = time * 0.01;
+        galaxy.rotation.x = time * 0.01; // Reduced from 0.02
+        galaxy.rotation.y = time * 0.015; // Reduced from 0.03
+        galaxy.rotation.z = time * 0.005; // Reduced from 0.01
         
-        // Parallax on mouse move - distant objects move less
-        galaxy.position.x -= moveX * 10;
-        galaxy.position.y -= moveY * 10;
+        // Parallax on mouse move - REDUCED
+        galaxy.position.x -= moveX * 5; // Reduced from 10
+        galaxy.position.y -= moveY * 5; // Reduced from 10
       });
       
-      // Animate bright stars - pulse the glow
+      // Animate bright stars - pulse the glow - SLOWED DOWN
       brightStars.forEach((star, i) => {
-        const t = time * 2 + i;
-        const pulseFactor = 0.8 + Math.sin(t) * 0.2;
+        const t = time + i; // Slowed down from time*2
+        const pulseFactor = 0.8 + Math.sin(t * 0.5) * 0.2; // Reduced speed from t
         
         // Apply pulse to glow (child 1) and flare (child 2)
         if (star.children[1]) star.children[1].scale.set(pulseFactor, pulseFactor, pulseFactor);
@@ -370,9 +373,9 @@ const SpaceBackground: React.FC = () => {
           1
         );
         
-        // Parallax effect
-        star.position.x -= moveX * 20;
-        star.position.y -= moveY * 20;
+        // Parallax effect - REDUCED
+        star.position.x -= moveX * 10; // Reduced from 20
+        star.position.y -= moveY * 10; // Reduced from 20
       });
       
       renderer.render(scene, camera);
