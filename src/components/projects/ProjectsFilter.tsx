@@ -10,9 +10,10 @@ const ProjectsFilter: React.FC<ProjectsFilterProps> = ({ onFilterChange }) => {
   return (
     <TabsList className="bg-blue-900/20 border border-blue-900/40 mb-8">
       <TabsTrigger value="all">All Projects</TabsTrigger>
-      <TabsTrigger value="web">Web Apps</TabsTrigger>
-      <TabsTrigger value="ecommerce">E-commerce</TabsTrigger>
-      <TabsTrigger value="cms">CMS</TabsTrigger>
+      <TabsTrigger value="cms-ecommerce">CMS & E-commerce</TabsTrigger>
+      <TabsTrigger value="ai-integration">AI Integration</TabsTrigger>
+      <TabsTrigger value="front-end">Front-End</TabsTrigger>
+      <TabsTrigger value="full-stack">Full-Stack</TabsTrigger>
     </TabsList>
   );
 };

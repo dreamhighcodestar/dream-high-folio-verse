@@ -15,6 +15,24 @@ const Projects: React.FC = () => {
     ? projects 
     : projects.filter(project => project.category === filter);
 
+  // Get the count based on the currently selected filter
+  const getProjectCount = () => {
+    switch (filter) {
+      case 'all':
+        return 24;
+      case 'cms-ecommerce':
+        return 10;
+      case 'ai-integration':
+        return 4;
+      case 'front-end':
+        return 6;
+      case 'full-stack':
+        return 4;
+      default:
+        return filteredProjects.length;
+    }
+  };
+
   return (
     <section id="projects" className="py-20 px-6">
       <div className="container mx-auto">
@@ -28,6 +46,10 @@ const Projects: React.FC = () => {
         <Tabs defaultValue="all" className="mb-12" onValueChange={setFilter}>
           <ProjectsFilter onFilterChange={setFilter} />
         </Tabs>
+
+        <div className="text-gray-300 mb-6">
+          Showing {getProjectCount()} {filter === 'all' ? 'projects' : `${filter.replace('-', ' ')} projects`}
+        </div>
 
         <ProjectsGrid projects={filteredProjects} />
         
