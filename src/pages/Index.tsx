@@ -1,6 +1,6 @@
 
 import React, { useEffect } from 'react';
-import ThreeBackground from '../components/ThreeBackground';
+import SpaceBackground from '../components/SpaceBackground';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
 import About from '../components/About';
@@ -17,7 +17,7 @@ const Index: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#050713]/80 to-[#0c1a36]/80 overflow-hidden relative">
-      <ThreeBackground />
+      <SpaceBackground />
       
       <div className="relative z-10">
         <Header />

@@ -98,84 +98,91 @@ const SpaceBackground: React.FC = () => {
     
     // Create multiple star layers for parallax effect
     const starLayers = [
-      createStarField(12000, 0.1, 200, 1.0),  // Distant small stars
-      createStarField(6000, 0.15, 150, 1.2),  // Mid-distance stars
-      createStarField(3000, 0.2, 100, 1.4),   // Closer stars
-      createStarField(1000, 0.3, 50, 1.6)     // Very close bright stars
+      createStarField(15000, 0.1, 200, 1.0),  // Distant small stars
+      createStarField(8000, 0.15, 150, 1.2),  // Mid-distance stars
+      createStarField(4000, 0.2, 100, 1.4),   // Closer stars
+      createStarField(1500, 0.3, 50, 1.6)     // Very close bright stars
     ];
-
-    // Create bright points for larger stars with subtle glow
-    const createBrightStar = (x: number, y: number, z: number, size: number, color: THREE.Color) => {
-      // Core star point
+    
+    // Create cosmic dust particles
+    const createCosmicDust = (count: number, size: number, maxDepth: number) => {
       const geometry = new THREE.BufferGeometry();
-      const positions = new Float32Array(3);
-      positions[0] = x;
-      positions[1] = y;
-      positions[2] = z;
+      const positions = new Float32Array(count * 3);
+      const colors = new Float32Array(count * 3);
+      
+      for (let i = 0; i < count; i++) {
+        const i3 = i * 3;
+        
+        // More clustered distribution for dust effect
+        const radius = (5 + Math.random() * Math.random() * maxDepth);
+        const theta = Math.random() * Math.PI * 2;
+        const phi = Math.acos(2 * Math.random() - 1);
+        
+        positions[i3] = radius * Math.sin(phi) * Math.cos(theta);
+        positions[i3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
+        positions[i3 + 2] = radius * Math.cos(phi);
+        
+        // Dust colors - more subtle blues and purples
+        const color = new THREE.Color();
+        const hue = 0.6 + Math.random() * 0.2; // Blue to purple range
+        const saturation = 0.2 + Math.random() * 0.3; // Not too saturated
+        const lightness = 0.2 + Math.random() * 0.3; // Dim to medium brightness
+        color.setHSL(hue, saturation, lightness);
+        
+        colors[i3] = color.r;
+        colors[i3 + 1] = color.g;
+        colors[i3 + 2] = color.b;
+      }
       
       geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
       
       const material = new THREE.PointsMaterial({
         size: size,
-        color: color,
-        transparent: true,
-        opacity: 0.9,
         sizeAttenuation: true,
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.5,
+        depthWrite: false,
         blending: THREE.AdditiveBlending
       });
       
-      return new THREE.Points(geometry, material);
+      const dust = new THREE.Points(geometry, material);
+      scene.add(dust);
+      return dust;
     };
     
-    // Add a few dozen bright stars scattered throughout
-    const brightStars = [];
-    for (let i = 0; i < 50; i++) {
-      const radius = 20 + Math.random() * 150;
-      const theta = Math.random() * Math.PI * 2;
-      const phi = Math.acos(2 * Math.random() - 1);
-      
-      const x = radius * Math.sin(phi) * Math.cos(theta);
-      const y = radius * Math.sin(phi) * Math.sin(theta);
-      const z = radius * Math.cos(phi);
-      
-      const size = 0.5 + Math.random() * 0.5;
-      
-      // Create color with slight variations
-      let color;
-      if (Math.random() > 0.7) {
-        // Blue-ish
-        color = new THREE.Color(0.8, 0.9, 1.0);
-      } else if (Math.random() > 0.4) {
-        // Yellow-ish
-        color = new THREE.Color(1.0, 0.9, 0.7);
-      } else {
-        // White
-        color = new THREE.Color(1.0, 1.0, 1.0);
-      }
-      
-      const star = createBrightStar(x, y, z, size, color);
-      scene.add(star);
-      brightStars.push(star);
-    }
-    
+    // Create cosmic dust layers
+    const dustLayers = [
+      createCosmicDust(20000, 0.06, 120),
+      createCosmicDust(15000, 0.08, 100),
+      createCosmicDust(10000, 0.1, 80)
+    ];
+
     // Subtle autonomous movement variables
     let time = 0;
     
     // Animation loop with subtle movements
     const animate = () => {
-      time += 0.0005;
+      time += 0.0003; // Very slow movement
       
       // Subtle autonomous rotation of star layers
       starLayers.forEach((layer, i) => {
-        const speedFactor = 0.1 - (i * 0.02);
+        const speedFactor = 0.05 - (i * 0.01);
         layer.rotation.x = time * speedFactor;
-        layer.rotation.y = time * speedFactor * 1.5;
+        layer.rotation.y = time * speedFactor * 1.2;
       });
       
-      // Subtle pulsing for bright stars
-      brightStars.forEach((star, i) => {
-        const pulseFactor = 0.9 + Math.sin(time * 10 + i) * 0.1;
-        star.material.size = star.material.size * 0.99 + star.material.size * 0.01 * pulseFactor;
+      // Even slower movement for dust layers
+      dustLayers.forEach((layer, i) => {
+        const speedFactor = 0.02 - (i * 0.005);
+        const amplitude = 0.1 + (i * 0.05);
+        layer.rotation.x = time * speedFactor;
+        layer.rotation.y = time * speedFactor * 0.8;
+        
+        // Add some subtle swirling effect to the dust
+        layer.position.x = Math.sin(time * 0.2 + i) * amplitude;
+        layer.position.y = Math.cos(time * 0.15 + i * 0.5) * amplitude;
       });
       
       renderer.render(scene, camera);
