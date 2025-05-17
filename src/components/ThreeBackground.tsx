@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
@@ -18,70 +17,237 @@ const ThreeBackground: React.FC = () => {
     renderer.setClearColor(0x030508, 1); // Darker space color
     mountRef.current.appendChild(renderer.domElement);
 
-    // Stars with enhanced colors and distribution
-    const starsGeometry = new THREE.BufferGeometry();
-    const starsCount = 7000; // Increased stars count for more density
-    const posArray = new Float32Array(starsCount * 3);
-    const colorsArray = new Float32Array(starsCount * 3);
-    const sizeArray = new Float32Array(starsCount);
+    // Create diverse particle shapes instead of just squares
+    const createRandomParticles = () => {
+      const starsGeometry = new THREE.BufferGeometry();
+      const starsCount = 7000;
+      const posArray = new Float32Array(starsCount * 3);
+      const colorsArray = new Float32Array(starsCount * 3);
+      const sizeArray = new Float32Array(starsCount);
+      const opacityArray = new Float32Array(starsCount);
+      const shapeArray = new Float32Array(starsCount); // For different shapes
 
-    for (let i = 0; i < starsCount * 3; i += 3) {
-      // Position (improved sphere distribution)
-      const radius = 50 + Math.random() * 200; // Increased distance variance
-      const theta = Math.random() * Math.PI * 2; // Angle around y axis
-      const phi = Math.acos(2 * Math.random() - 1); // Angle from y axis
-      
-      posArray[i] = radius * Math.sin(phi) * Math.cos(theta);
-      posArray[i + 1] = radius * Math.sin(phi) * Math.sin(theta);
-      posArray[i + 2] = radius * Math.cos(phi);
-      
-      // Star size variance - more dramatic size differences
-      sizeArray[i/3] = Math.random() < 0.15 ? 0.3 + Math.random() * 0.4 : 0.05 + Math.random() * 0.15;
-      
-      // Enhanced star colors - more vibrant
-      const colorChoice = Math.random();
-      if (colorChoice > 0.85) {
-        // Blue tint stars
-        colorsArray[i] = 0.5 + Math.random() * 0.3; // R
-        colorsArray[i + 1] = 0.7 + Math.random() * 0.3; // G
-        colorsArray[i + 2] = 1.0; // B
-      } else if (colorChoice > 0.7) {
-        // Yellow tint stars
-        colorsArray[i] = 1.0; // R
-        colorsArray[i + 1] = 0.8 + Math.random() * 0.2; // G
-        colorsArray[i + 2] = 0.4 + Math.random() * 0.3; // B
-      } else if (colorChoice > 0.55) {
-        // Red tint stars
-        colorsArray[i] = 1.0; // R
-        colorsArray[i + 1] = 0.2 + Math.random() * 0.3; // G
-        colorsArray[i + 2] = 0.2 + Math.random() * 0.3; // B
-      } else if (colorChoice > 0.4) {
-        // Purple tint stars - new color
-        colorsArray[i] = 0.7 + Math.random() * 0.3; // R
-        colorsArray[i + 1] = 0.2 + Math.random() * 0.2; // G
-        colorsArray[i + 2] = 0.8 + Math.random() * 0.2; // B
-      } else {
-        // White/blue stars
-        const bright = 0.8 + Math.random() * 0.2;
-        colorsArray[i] = bright; // R
-        colorsArray[i + 1] = bright; // G
-        colorsArray[i + 2] = bright + Math.random() * 0.2; // B
+      for (let i = 0; i < starsCount * 3; i += 3) {
+        // Position (improved sphere distribution)
+        const radius = 50 + Math.random() * 200;
+        const theta = Math.random() * Math.PI * 2;
+        const phi = Math.acos(2 * Math.random() - 1);
+        
+        posArray[i] = radius * Math.sin(phi) * Math.cos(theta);
+        posArray[i + 1] = radius * Math.sin(phi) * Math.sin(theta);
+        posArray[i + 2] = radius * Math.cos(phi);
+        
+        // Star size variance - more dramatic size differences
+        sizeArray[i/3] = Math.random() < 0.15 ? 0.3 + Math.random() * 0.4 : 0.05 + Math.random() * 0.15;
+        
+        // Random opacity for twinkling effect
+        opacityArray[i/3] = 0.7 + Math.random() * 0.3;
+        
+        // Shape type (0-3 for different shapes)
+        shapeArray[i/3] = Math.floor(Math.random() * 4);
+        
+        // Enhanced star colors - more vibrant
+        const colorChoice = Math.random();
+        if (colorChoice > 0.85) {
+          // Blue tint stars
+          colorsArray[i] = 0.5 + Math.random() * 0.3;
+          colorsArray[i + 1] = 0.7 + Math.random() * 0.3;
+          colorsArray[i + 2] = 1.0;
+        } else if (colorChoice > 0.7) {
+          // Yellow tint stars
+          colorsArray[i] = 1.0;
+          colorsArray[i + 1] = 0.8 + Math.random() * 0.2;
+          colorsArray[i + 2] = 0.4 + Math.random() * 0.3;
+        } else if (colorChoice > 0.55) {
+          // Red tint stars
+          colorsArray[i] = 1.0;
+          colorsArray[i + 1] = 0.2 + Math.random() * 0.3;
+          colorsArray[i + 2] = 0.2 + Math.random() * 0.3;
+        } else if (colorChoice > 0.4) {
+          // Purple tint stars
+          colorsArray[i] = 0.7 + Math.random() * 0.3;
+          colorsArray[i + 1] = 0.2 + Math.random() * 0.2;
+          colorsArray[i + 2] = 0.8 + Math.random() * 0.2;
+        } else {
+          // White/blue stars
+          const bright = 0.8 + Math.random() * 0.2;
+          colorsArray[i] = bright;
+          colorsArray[i + 1] = bright;
+          colorsArray[i + 2] = bright + Math.random() * 0.2;
+        }
       }
-    }
 
-    starsGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-    starsGeometry.setAttribute('color', new THREE.BufferAttribute(colorsArray, 3));
+      starsGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+      starsGeometry.setAttribute('color', new THREE.BufferAttribute(colorsArray, 3));
+      
+      return { geometry: starsGeometry, sizes: sizeArray, shapes: shapeArray, opacity: opacityArray };
+    };
+
+    // Create different particle groups with varied shapes
+    const createShapedParticles = () => {
+      const { geometry, sizes, shapes, opacity } = createRandomParticles();
+      
+      // Create different texture shapes for particles
+      const createCircleTexture = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = 32;
+        canvas.height = 32;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return null;
+        
+        ctx.beginPath();
+        ctx.arc(16, 16, 14, 0, Math.PI * 2);
+        ctx.closePath();
+        ctx.fillStyle = 'white';
+        ctx.fill();
+        
+        const texture = new THREE.CanvasTexture(canvas);
+        texture.needsUpdate = true;
+        return texture;
+      };
+      
+      const createTriangleTexture = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = 32;
+        canvas.height = 32;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return null;
+        
+        ctx.beginPath();
+        ctx.moveTo(16, 2);
+        ctx.lineTo(30, 28);
+        ctx.lineTo(2, 28);
+        ctx.closePath();
+        ctx.fillStyle = 'white';
+        ctx.fill();
+        
+        const texture = new THREE.CanvasTexture(canvas);
+        texture.needsUpdate = true;
+        return texture;
+      };
+      
+      const createStarTexture = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = 32;
+        canvas.height = 32;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return null;
+        
+        ctx.beginPath();
+        const spikes = 5;
+        const outerRadius = 14;
+        const innerRadius = 6;
+        
+        let rot = Math.PI / 2 * 3;
+        let x = 16;
+        let y = 16;
+        let step = Math.PI / spikes;
+        
+        ctx.moveTo(x, y - outerRadius);
+        for (let i = 0; i < spikes; i++) {
+          x = 16 + Math.cos(rot) * outerRadius;
+          y = 16 + Math.sin(rot) * outerRadius;
+          ctx.lineTo(x, y);
+          rot += step;
+          
+          x = 16 + Math.cos(rot) * innerRadius;
+          y = 16 + Math.sin(rot) * innerRadius;
+          ctx.lineTo(x, y);
+          rot += step;
+        }
+        ctx.lineTo(16, 16 - outerRadius);
+        ctx.closePath();
+        ctx.fillStyle = 'white';
+        ctx.fill();
+        
+        const texture = new THREE.CanvasTexture(canvas);
+        texture.needsUpdate = true;
+        return texture;
+      };
+      
+      const createDiamondTexture = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = 32;
+        canvas.height = 32;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return null;
+        
+        ctx.beginPath();
+        ctx.moveTo(16, 2);  // Top
+        ctx.lineTo(30, 16); // Right
+        ctx.lineTo(16, 30); // Bottom
+        ctx.lineTo(2, 16);  // Left
+        ctx.closePath();
+        ctx.fillStyle = 'white';
+        ctx.fill();
+        
+        const texture = new THREE.CanvasTexture(canvas);
+        texture.needsUpdate = true;
+        return texture;
+      };
+      
+      // Create the particle textures
+      const circleTexture = createCircleTexture();
+      const triangleTexture = createTriangleTexture();
+      const starTexture = createStarTexture();
+      const diamondTexture = createDiamondTexture();
+      
+      if (!circleTexture || !triangleTexture || !starTexture || !diamondTexture) return null;
+      
+      const textures = [circleTexture, triangleTexture, starTexture, diamondTexture];
+      
+      // Create separate particle systems for each shape type
+      const particleSystems = [];
+      
+      for (let shapeType = 0; shapeType < 4; shapeType++) {
+        const shapeIndices = Array.from({ length: shapes.length })
+          .map((_, i) => i)
+          .filter(i => shapes[i] === shapeType);
+          
+        if (shapeIndices.length === 0) continue;
+        
+        const shapeGeometry = new THREE.BufferGeometry();
+        const positions = new Float32Array(shapeIndices.length * 3);
+        const colors = new Float32Array(shapeIndices.length * 3);
+        
+        shapeIndices.forEach((originalIndex, newIndex) => {
+          // Copy position
+          const origPosIndex = originalIndex * 3;
+          const newPosIndex = newIndex * 3;
+          positions[newPosIndex] = geometry.attributes.position.array[origPosIndex];
+          positions[newPosIndex + 1] = geometry.attributes.position.array[origPosIndex + 1];
+          positions[newPosIndex + 2] = geometry.attributes.position.array[origPosIndex + 2];
+          
+          // Copy color
+          const origColorIndex = originalIndex * 3;
+          const newColorIndex = newIndex * 3;
+          colors[newColorIndex] = geometry.attributes.color.array[origColorIndex];
+          colors[newColorIndex + 1] = geometry.attributes.color.array[origColorIndex + 1];
+          colors[newColorIndex + 2] = geometry.attributes.color.array[origColorIndex + 2];
+        });
+        
+        shapeGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        shapeGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+        
+        const material = new THREE.PointsMaterial({
+          size: 0.2,
+          map: textures[shapeType],
+          vertexColors: true,
+          transparent: true,
+          opacity: 0.95,
+          sizeAttenuation: true,
+          depthWrite: false,
+        });
+        
+        const particles = new THREE.Points(shapeGeometry, material);
+        scene.add(particles);
+        particleSystems.push(particles);
+      }
+      
+      return particleSystems;
+    };
     
-    const starsMaterial = new THREE.PointsMaterial({
-      size: 0.2, // Larger size for more pronounced stars
-      vertexColors: true,
-      transparent: true,
-      opacity: 0.95,
-      sizeAttenuation: true,
-    });
-
-    const starField = new THREE.Points(starsGeometry, starsMaterial);
-    scene.add(starField);
+    const starSystems = createShapedParticles();
     
     // Create distant galaxies - more and larger galaxies
     const createGalaxy = (x: number, y: number, z: number, size: number, color: THREE.Color) => {
@@ -228,7 +394,7 @@ const ThreeBackground: React.FC = () => {
       createDistantStar(-70, -20, -160, 0.7, 0x88ffaa),  // Teal
     ];
 
-    // Enhanced mouse movement effect with more sensitivity
+    // Mouse movement effect with more sensitivity
     let mouseX = 0;
     let mouseY = 0;
     let targetMouseX = 0;
@@ -270,9 +436,15 @@ const ThreeBackground: React.FC = () => {
       const combinedX = mouseX * 3 + autonomousX;
       const combinedY = mouseY * 3 + autonomousY;
 
-      // Rotate star field with enhanced motion
-      starField.rotation.x += 0.0003;
-      starField.rotation.y += 0.0004;
+      // Rotate star systems
+      if (starSystems) {
+        starSystems.forEach((system, i) => {
+          if (system) {
+            system.rotation.x += 0.0001 * (i + 1);
+            system.rotation.y += 0.0002 * (i + 1);
+          }
+        });
+      }
       
       // Galaxies with more dynamic rotation
       galaxies.forEach((galaxy, i) => {
@@ -312,8 +484,9 @@ const ThreeBackground: React.FC = () => {
       camera.rotation.y = -combinedX * 0.2;
       
       // Enhanced parallax effect on scroll
-      starField.position.y = scrollY * 0.005;
-      // Move other elements based on scroll for enhanced parallax
+      starSystems && starSystems.forEach(system => {
+        system.position.y = scrollY * 0.005;
+      });
       nebulae.forEach((nebula, i) => {
         nebula.position.y += scrollY * 0.001 * (i % 3 === 0 ? 1 : -1);
       });

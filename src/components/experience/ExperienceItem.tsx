@@ -21,18 +21,28 @@ const ExperienceItem: React.FC<ExperienceItemProps> = ({
       }`}
     >
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <h3 className="text-xl md:text-2xl font-bold text-white">
-            {experience.title} <span className="text-blue-500">@ {experience.company}</span>
-          </h3>
-          <p className="text-gray-400">{experience.period}</p>
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-full overflow-hidden bg-blue-500/10 flex-shrink-0">
+            <AnimatedImage
+              src={experience.companyLogo}
+              alt={`${experience.company} logo`}
+              className="w-full h-full object-contain p-1"
+            />
+          </div>
+          
+          <div>
+            <h3 className="text-xl md:text-2xl font-bold text-white">
+              {experience.title} <span className="text-blue-500">@ {experience.company}</span>
+            </h3>
+            <p className="text-gray-400">{experience.period}</p>
+          </div>
         </div>
         
         <div className="w-20 h-20 rounded-full overflow-hidden bg-blue-500/10 flex-shrink-0">
           <AnimatedImage
-            src={experience.companyLogo}
-            alt={`${experience.company} logo`}
-            className="w-full h-full object-contain p-2"
+            src={experience.image || experience.companyLogo}
+            alt={`${experience.company}`}
+            className="w-full h-full object-cover p-2"
           />
         </div>
       </div>

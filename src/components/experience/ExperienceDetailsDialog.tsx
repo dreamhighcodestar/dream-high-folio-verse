@@ -15,6 +15,13 @@ const ExperienceDetailsDialog: React.FC<ExperienceDetailsDialogProps> = ({ exper
     <DialogContent className="max-w-3xl bg-gradient-to-br from-blue-900/90 to-black/95 border-blue-900/40 text-white">
       <DialogHeader>
         <DialogTitle className="text-2xl font-bold flex items-center gap-3">
+          <div className="w-8 h-8 rounded-full overflow-hidden bg-blue-500/10 flex-shrink-0">
+            <img
+              src={experience.companyLogo}
+              alt={experience.company || ''}
+              className="w-full h-full object-contain"
+            />
+          </div>
           {experience.title}
           <span className="text-blue-400">@ {experience.company}</span>
         </DialogTitle>
@@ -24,7 +31,7 @@ const ExperienceDetailsDialog: React.FC<ExperienceDetailsDialogProps> = ({ exper
         <div>
           <div className="aspect-video overflow-hidden rounded-lg mb-6 bg-white/5 flex items-center justify-center">
             <AnimatedImage
-              src={experience.image || ''}
+              src={experience.image || experience.companyLogo}
               alt={experience.company || ''}
               className="w-full h-full object-cover"
             />
