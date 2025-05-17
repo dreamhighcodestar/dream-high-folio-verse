@@ -11,8 +11,8 @@ interface FeaturedProjectProps {
 const FeaturedProject: React.FC<FeaturedProjectProps> = ({ project }) => {
   return (
     <CarouselItem key={project.id} className="md:basis-1/2 lg:basis-1/3">
-      <div className="p-1 h-full">
-        <Card className="overflow-hidden bg-gradient-to-br from-blue-900/30 to-blue-900/10 border border-blue-900/40 h-full flex flex-col">
+      <div className="p-1">
+        <Card className="overflow-hidden bg-gradient-to-br from-blue-900/30 to-blue-900/10 border border-blue-900/40">
           <div className="relative h-48 overflow-hidden">
             <img 
               src={project.image} 
