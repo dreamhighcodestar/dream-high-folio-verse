@@ -3,7 +3,6 @@ import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Github, Globe, Layers, ExternalLink } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { ProjectType } from '@/types/project';
 import ProjectDetailsDialog from './ProjectDetailsDialog';
@@ -81,10 +80,12 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isAnimated }) => {
           
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant="ghost" className="mt-4 text-blue-400 hover:text-blue-300 hover:bg-blue-900/20 flex items-center gap-1">
-                <ExternalLink size={16} /> 
+              <button className="inline-flex items-center text-blue-400 hover:text-blue-300 transition-colors mt-4">
                 <span>View Details</span>
-              </Button>
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
+              </button>
             </DialogTrigger>
             <ProjectDetailsDialog project={project} />
           </Dialog>

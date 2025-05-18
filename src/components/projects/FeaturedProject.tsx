@@ -4,8 +4,7 @@ import { Card } from '@/components/ui/card';
 import { CarouselItem } from '@/components/ui/carousel';
 import { ProjectType } from '@/types/project';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { ExternalLink } from 'lucide-react';
+import { Github, Globe } from 'lucide-react';
 import ProjectDetailsDialog from './ProjectDetailsDialog';
 
 interface FeaturedProjectProps {
@@ -31,14 +30,29 @@ const FeaturedProject: React.FC<FeaturedProjectProps> = ({ project }) => {
                 <p className="text-xs text-gray-300 line-clamp-2 mb-3">{project.description}</p>
                 <div className="flex justify-between items-center">
                   <p className="text-xs text-gray-400">{project.technologies.slice(0, 3).join(", ")}</p>
-                  <Dialog>
-                    <DialogTrigger asChild>
-                      <Button variant="ghost" size="sm" className="text-blue-400 hover:text-blue-300 hover:bg-blue-900/30 p-1 h-auto">
-                        <ExternalLink size={16} />
-                      </Button>
-                    </DialogTrigger>
-                    <ProjectDetailsDialog project={project} />
-                  </Dialog>
+                  <div className="flex items-center space-x-2">
+                    {project.githubUrl && (
+                      <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white">
+                        <Github size={16} />
+                      </a>
+                    )}
+                    {project.liveUrl && (
+                      <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white">
+                        <Globe size={16} />
+                      </a>
+                    )}
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <button className="text-blue-400 hover:text-blue-300 transition-colors text-xs flex items-center">
+                          View Details
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                            <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                          </svg>
+                        </button>
+                      </DialogTrigger>
+                      <ProjectDetailsDialog project={project} />
+                    </Dialog>
+                  </div>
                 </div>
               </div>
             </div>
