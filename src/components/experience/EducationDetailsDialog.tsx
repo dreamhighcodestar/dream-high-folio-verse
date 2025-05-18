@@ -9,6 +9,9 @@ interface EducationDetailsDialogProps {
 }
 
 const EducationDetailsDialog: React.FC<EducationDetailsDialogProps> = ({ education }) => {
+  // Use a different image for the details dialog than the institution logo
+  const detailsImage = education.details?.detailsImage || education.image;
+  
   return (
     <DialogContent className="max-w-3xl bg-gradient-to-br from-blue-900/90 to-black/95 border-blue-900/40 text-white">
       <DialogHeader>
@@ -22,7 +25,7 @@ const EducationDetailsDialog: React.FC<EducationDetailsDialogProps> = ({ educati
         <div>
           <div className="aspect-video overflow-hidden rounded-lg mb-6 bg-white/5 flex items-center justify-center">
             <AnimatedImage
-              src={education.image}
+              src={detailsImage}
               alt={education.institution}
               className="w-full h-full object-cover"
             />

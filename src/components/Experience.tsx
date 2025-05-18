@@ -9,6 +9,16 @@ import ExperienceDetailsDialog from './experience/ExperienceDetailsDialog';
 import EducationDetailsDialog from './experience/EducationDetailsDialog';
 import { ExperienceItem as ExperienceItemType } from '@/types/experience';
 
+// Modify experience items to include different detail images if needed
+experiences.forEach(exp => {
+  if (!exp.details) exp.details = {};
+  // If no detailsImage is set, we'll use the existing image in the component
+});
+
+// Add a detailsImage for education if needed
+if (!education.details) education.details = {};
+// If no detailsImage is set, we'll use the existing image in the component
+
 const Experience: React.FC = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [showExperienceDetails, setShowExperienceDetails] = useState(false);

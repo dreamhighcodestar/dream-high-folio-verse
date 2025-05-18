@@ -11,6 +11,9 @@ interface ExperienceDetailsDialogProps {
 const ExperienceDetailsDialog: React.FC<ExperienceDetailsDialogProps> = ({ experience }) => {
   if (!experience) return null;
   
+  // Use a different image for the details dialog than the company logo
+  const detailsImage = experience.details?.detailsImage || experience.image || experience.companyLogo;
+  
   return (
     <DialogContent className="max-w-3xl bg-gradient-to-br from-blue-900/90 to-black/95 border-blue-900/40 text-white">
       <DialogHeader>
@@ -31,7 +34,7 @@ const ExperienceDetailsDialog: React.FC<ExperienceDetailsDialogProps> = ({ exper
         <div>
           <div className="aspect-video overflow-hidden rounded-lg mb-6 bg-white/5 flex items-center justify-center">
             <AnimatedImage
-              src={experience.image || experience.companyLogo}
+              src={detailsImage}
               alt={experience.company || ''}
               className="w-full h-full object-cover"
             />

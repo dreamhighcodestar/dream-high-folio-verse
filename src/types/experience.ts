@@ -10,6 +10,7 @@ export interface ExperienceItem {
     projects?: string[];
     achievements?: string[];
     technologies?: string[];
+    detailsImage?: string;
   };
 }
 
@@ -24,5 +25,6 @@ export interface EducationItem {
   details?: {
     courses?: string[];
     achievements?: string[];
+    detailsImage?: string;
   };
 }
