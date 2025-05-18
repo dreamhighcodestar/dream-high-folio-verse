@@ -2,8 +2,11 @@
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Github, Globe, Layers } from 'lucide-react';
+import { Github, Globe, Layers, ExternalLink } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { ProjectType } from '@/types/project';
+import ProjectDetailsDialog from './ProjectDetailsDialog';
 
 interface ProjectCardProps {
   project: ProjectType;
@@ -19,7 +22,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isAnimated }) => {
           : 'translate-y-16 opacity-0'
       }`}
     >
-      <Card className="overflow-hidden h-full bg-gradient-to-br from-blue-900/20 to-blue-900/5 border border-blue-900/40 hover:border-blue-500/40 transition-all duration-300 hover:shadow-lg hover:shadow-blue-900/20">
+      <Card className="overflow-hidden h-full bg-gradient-to-br from-blue-900/20 to-blue-900/5 border border-blue-900/40 hover:border-blue-500/40 transition-all duration-300 hover:shadow-lg hover:shadow-blue-900/20 flex flex-col">
         <div className="relative h-48 overflow-hidden group">
           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/60 z-10"></div>
           <img 
@@ -29,9 +32,11 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isAnimated }) => {
           />
         </div>
         
-        <CardContent className="p-6">
+        <CardContent className="p-6 flex flex-col flex-1">
           <div className="flex justify-between items-start mb-3">
-            <h3 className="text-xl font-semibold text-white">{project.title}</h3>
+            <h3 className="text-xl font-semibold text-white">
+              {project.title.length > 20 ? `${project.title.substring(0, 20)}...` : project.title}
+            </h3>
             <div className="flex space-x-2">
               {project.githubUrl && (
                 <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white">
@@ -46,26 +51,43 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isAnimated }) => {
             </div>
           </div>
           
-          <p className="text-gray-300 text-sm mb-4">{project.description}</p>
+          <p className="text-gray-300 text-sm mb-4 line-clamp-2">
+            {project.description}
+          </p>
           
           <div className="mb-4">
             <h4 className="text-sm font-semibold text-gray-200 mb-2 flex items-center">
               <Layers size={16} className="mr-2 text-blue-500" /> Key Features
             </h4>
             <ul className="text-xs text-gray-300 space-y-1 pl-6 list-disc">
-              {project.features.slice(0, 3).map((feature, idx) => (
-                <li key={idx}>{feature}</li>
+              {project.features.slice(0, 2).map((feature, idx) => (
+                <li key={idx} className="line-clamp-1">{feature}</li>
               ))}
             </ul>
           </div>
           
           <div className="flex flex-wrap gap-1 mt-auto pt-2 border-t border-blue-900/30">
-            {project.technologies.map((tech, idx) => (
+            {project.technologies.slice(0, 3).map((tech, idx) => (
               <Badge key={idx} variant="outline" className="bg-blue-500/10 text-blue-300 border-blue-500/30 text-xs">
                 {tech}
               </Badge>
             ))}
+            {project.technologies.length > 3 && (
+              <Badge variant="outline" className="bg-blue-500/10 text-blue-300 border-blue-500/30 text-xs">
+                +{project.technologies.length - 3}
+              </Badge>
+            )}
           </div>
+          
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant="ghost" className="mt-4 text-blue-400 hover:text-blue-300 hover:bg-blue-900/20 flex items-center gap-1">
+                <ExternalLink size={16} /> 
+                <span>View Details</span>
+              </Button>
+            </DialogTrigger>
+            <ProjectDetailsDialog project={project} />
+          </Dialog>
         </CardContent>
       </Card>
     </div>

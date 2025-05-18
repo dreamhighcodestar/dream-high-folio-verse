@@ -24,6 +24,7 @@ const Index: React.FC = () => {
         <Hero />
         <About />
         <Experience />
+        <section id="education"></section>
         <Projects />
         <Skills />
         <Contact />
