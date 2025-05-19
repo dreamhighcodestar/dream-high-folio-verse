@@ -1,12 +1,10 @@
 
 import React, { useState } from 'react';
 import { Dialog } from '@/components/ui/dialog';
-import { experiences, education } from '../data/experienceData';
+import { experiences } from '../data/experienceData';
 import ExperienceTabs from './experience/ExperienceTabs';
 import ExperienceItem from './experience/ExperienceItem';
-import EducationCard from './experience/EducationCard';
 import ExperienceDetailsDialog from './experience/ExperienceDetailsDialog';
-import EducationDetailsDialog from './experience/EducationDetailsDialog';
 import { ExperienceItem as ExperienceItemType } from '@/types/experience';
 
 // Modify experience items to include different detail images if needed
@@ -26,14 +24,9 @@ experiences.forEach(exp => {
   }
 });
 
-// Add a detailsImage for education if needed
-if (!education.details) education.details = {};
-education.details.detailsImage = "/lovable-uploads/45cc8efd-c724-4c9b-b7c3-c09e75c3a556.png";
-
 const Experience: React.FC = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [showExperienceDetails, setShowExperienceDetails] = useState(false);
-  const [showEducationDetails, setShowEducationDetails] = useState(false);
   const [selectedExperience, setSelectedExperience] = useState<ExperienceItemType | null>(null);
 
   const handleShowExperienceDetails = (experience: ExperienceItemType) => {
@@ -66,26 +59,11 @@ const Experience: React.FC = () => {
             ))}
           </div>
         </div>
-
-        <div className="mt-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-12 text-white">
-            <span className="text-blue-500">#</span> Education
-          </h2>
-          <EducationCard 
-            education={education}
-            onShowDetails={() => setShowEducationDetails(true)}
-          />
-        </div>
       </div>
 
       {/* Experience Details Dialog */}
       <Dialog open={showExperienceDetails} onOpenChange={setShowExperienceDetails}>
         <ExperienceDetailsDialog experience={selectedExperience} />
-      </Dialog>
-
-      {/* Education Details Dialog */}
-      <Dialog open={showEducationDetails} onOpenChange={setShowEducationDetails}>
-        <EducationDetailsDialog education={education} />
       </Dialog>
     </section>
   );
