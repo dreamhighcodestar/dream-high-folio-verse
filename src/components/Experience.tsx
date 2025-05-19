@@ -12,13 +12,14 @@ import { ExperienceItem as ExperienceItemType } from '@/types/experience';
 // Modify experience items to include different detail images if needed
 experiences.forEach(exp => {
   if (!exp.details) exp.details = {};
-  // Add distinct detailsImage for each experience - personal photos for details view
+  // Add distinct detailsImage for each experience
   if (!exp.details.detailsImage) {
-    // Using personal photos for the details view
+    // Example alternate images - you would replace these with actual URLs
     const imageMap: Record<string, string> = {
-      "Senior Full-Stack Developer": "/lovable-uploads/93b09091-b536-4f7f-9950-22149026a95d.png",
-      "Full-Stack Developer – CMS & E-commerce": "/lovable-uploads/662b99c4-f9e4-47f8-b29c-5c5ab2daf70f.png",
-      "Front-End Developer": "/lovable-uploads/6c1c300e-5fd1-422a-9d24-2eefcd8e9afe.png"
+      "Software Engineer": "/lovable-uploads/93b09091-b536-4f7f-9950-22149026a95d.png",
+      "Lead Developer": "/lovable-uploads/662b99c4-f9e4-47f8-b29c-5c5ab2daf70f.png",
+      "Full Stack Developer": "/lovable-uploads/6c1c300e-5fd1-422a-9d24-2eefcd8e9afe.png",
+      "Web Developer": "/lovable-uploads/54aa4a3c-d004-4b18-81f4-24b583c49334.png"
     };
     
     // Set a different detailsImage based on the job title or default to the original

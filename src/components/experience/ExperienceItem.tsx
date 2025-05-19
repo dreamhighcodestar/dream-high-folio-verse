@@ -40,7 +40,7 @@ const ExperienceItem: React.FC<ExperienceItemProps> = ({
         
         <div className="w-20 h-20 rounded-full overflow-hidden bg-blue-500/10 flex-shrink-0">
           <AnimatedImage
-            src={experience.companyLogo}
+            src={experience.image || experience.companyLogo}
             alt={`${experience.company}`}
             className="w-full h-full object-cover p-2"
           />
