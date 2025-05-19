@@ -21,9 +21,8 @@ const ProjectDetailsDialog: React.FC<ProjectDetailsDialogProps> = ({ project }) 
   // Create an array of images for the slider
   const images = [
     project.image,
-    project.additionalImages?.[0] || project.image,
-    project.additionalImages?.[1] || project.image
-  ];
+    ...(project.additionalImages || [])
+  ].filter(Boolean);
   
   const nextImage = () => {
     setCurrentImageIndex((prev) => (prev + 1) % images.length);
