@@ -19,14 +19,23 @@ const ExperienceTabs: React.FC<ExperienceTabsProps> = ({
         <button
           key={index}
           onClick={() => onTabClick(index)}
-          className={`px-4 py-3 text-left whitespace-nowrap md:whitespace-normal rounded transition-all ${
+          className={`px-4 py-3 text-left whitespace-nowrap md:whitespace-normal rounded transition-all flex items-center gap-3 ${
             activeTab === index
               ? 'bg-blue-900/30 text-white border-l-4 border-blue-500'
               : 'text-gray-400 hover:text-gray-200 hover:bg-blue-900/10 border-l-4 border-transparent'
           }`}
         >
-          <p className="font-medium">{exp.company}</p>
-          <p className="text-sm opacity-70">{exp.title}</p>
+          <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0 border border-blue-500/30 bg-white/5">
+            <img 
+              src={exp.companyLogo} 
+              alt={`${exp.company} logo`} 
+              className="w-full h-full object-contain p-1"
+            />
+          </div>
+          <div>
+            <p className="font-medium">{exp.company}</p>
+            <p className="text-sm opacity-70">{exp.title}</p>
+          </div>
         </button>
       ))}
     </div>
