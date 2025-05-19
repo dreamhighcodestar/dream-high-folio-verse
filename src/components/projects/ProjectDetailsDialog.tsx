@@ -18,7 +18,7 @@ interface ProjectDetailsDialogProps {
 const ProjectDetailsDialog: React.FC<ProjectDetailsDialogProps> = ({ project }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   
-  // Create an array of 3 images (use the same image if only one is provided)
+  // Create an array of images for the slider
   const images = [
     project.image,
     project.additionalImages?.[0] || project.image,
