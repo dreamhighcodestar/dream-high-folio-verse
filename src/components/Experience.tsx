@@ -12,12 +12,24 @@ import { ExperienceItem as ExperienceItemType } from '@/types/experience';
 // Modify experience items to include different detail images if needed
 experiences.forEach(exp => {
   if (!exp.details) exp.details = {};
-  // If no detailsImage is set, we'll use the existing image in the component
+  // Add distinct detailsImage for each experience
+  if (!exp.details.detailsImage) {
+    // Example alternate images - you would replace these with actual URLs
+    const imageMap: Record<string, string> = {
+      "Software Engineer": "/lovable-uploads/93b09091-b536-4f7f-9950-22149026a95d.png",
+      "Lead Developer": "/lovable-uploads/662b99c4-f9e4-47f8-b29c-5c5ab2daf70f.png",
+      "Full Stack Developer": "/lovable-uploads/6c1c300e-5fd1-422a-9d24-2eefcd8e9afe.png",
+      "Web Developer": "/lovable-uploads/54aa4a3c-d004-4b18-81f4-24b583c49334.png"
+    };
+    
+    // Set a different detailsImage based on the job title or default to the original
+    exp.details.detailsImage = imageMap[exp.title] || exp.image;
+  }
 });
 
 // Add a detailsImage for education if needed
 if (!education.details) education.details = {};
-// If no detailsImage is set, we'll use the existing image in the component
+education.details.detailsImage = "/lovable-uploads/45cc8efd-c724-4c9b-b7c3-c09e75c3a556.png";
 
 const Experience: React.FC = () => {
   const [activeTab, setActiveTab] = useState(0);
