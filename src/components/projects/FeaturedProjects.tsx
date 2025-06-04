@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Carousel, 
   CarouselContent, 
@@ -15,6 +15,7 @@ interface FeaturedProjectsProps {
 
 const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ projects }) => {
   const featuredProjects = projects.slice(0, 6);
+  const [centerIndex, setCenterIndex] = useState(0);
   
   return (
     <div className="container mx-auto mt-20">
@@ -28,10 +29,21 @@ const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ projects }) => {
             containScroll: "trimSnaps"
           }}
           className="w-full"
+          setApi={(api) => {
+            if (api) {
+              api.on('select', () => {
+                setCenterIndex(api.selectedScrollSnap());
+              });
+            }
+          }}
         >
           <CarouselContent className="-ml-2 md:-ml-4">
-            {featuredProjects.map((project) => (
-              <FeaturedProject key={project.id} project={project} />
+            {featuredProjects.map((project, index) => (
+              <FeaturedProject 
+                key={project.id} 
+                project={project} 
+                isCenter={index === centerIndex}
+              />
             ))}
           </CarouselContent>
           <CarouselPrevious className="left-2 bg-blue-900/50 border-blue-500/30 hover:bg-blue-800/70" />
