@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
-import emailjs from 'emailjs-com';
 import { z } from 'zod';
 import {
   Form,
@@ -16,7 +15,7 @@ import {
 } from '@/components/ui/form';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Mail } from 'lucide-react';
 
 // Define form validation schema
 const contactFormSchema = z.object({
@@ -47,42 +46,35 @@ const Contact: React.FC = () => {
   const onSubmit = async (data: ContactFormValues) => {
     setIsSubmitting(true);
 
-    // Prepare template parameters for EmailJS
-    const templateParams = {
-      from_name: data.name,
-      from_email: data.email,
-      to_email: recipientEmail,
-      subject: data.subject,
-      message: data.message,
-    };
-
     try {
-      // Send email using EmailJS
-      // Note: You need to replace these IDs with your own EmailJS account details
-      await emailjs.send(
-        'service_7e4nssn', // Service ID
-        'template_mpr7p7y', // Template ID
-        templateParams,
-        'lq7dfcwjVXRqdPJVQ' // Public Key
-      );
+      // Create mailto link with form data
+      const mailtoBody = `Name: ${data.name}\nEmail: ${data.email}\n\nMessage:\n${data.message}`;
+      const mailtoLink = `mailto:${recipientEmail}?subject=${encodeURIComponent(data.subject)}&body=${encodeURIComponent(mailtoBody)}`;
+      
+      // Open email client
+      window.location.href = mailtoLink;
 
       toast({
-        title: "Message Sent Successfully",
-        description: "Thank you for your message! I'll get back to you soon.",
+        title: "Email Client Opened",
+        description: "Your email client should open with the message pre-filled. Please send the email to complete your message.",
       });
 
       // Reset form after successful submission
       form.reset();
     } catch (error) {
-      console.error('Error sending message:', error);
+      console.error('Error opening email client:', error);
       toast({
-        title: "Failed to send message",
-        description: "There was an error sending your message. Please try again later.",
+        title: "Error",
+        description: "There was an error opening your email client. Please try copying the information and sending manually.",
         variant: "destructive",
       });
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleDirectEmail = () => {
+    window.location.href = `mailto:${recipientEmail}`;
   };
 
   return (
@@ -108,9 +100,12 @@ const Contact: React.FC = () => {
                 </div>
                 <div>
                   <h3 className="text-white font-medium">Email</h3>
-                  <a href="mailto:ivanfinan@gmail.com" className="text-gray-400 hover:text-blue-400 transition-colors">
-                    ivanfinan@gmail.com
-                  </a>
+                  <button 
+                    onClick={handleDirectEmail}
+                    className="text-gray-400 hover:text-blue-400 transition-colors text-left"
+                  >
+                    {recipientEmail}
+                  </button>
                 </div>
               </div>
 
@@ -237,20 +232,35 @@ const Contact: React.FC = () => {
                     )}
                   />
                   
-                  <Button 
-                    type="submit" 
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white transition-colors"
-                    disabled={isSubmitting}
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" /> 
-                        Sending...
-                      </>
-                    ) : (
-                      'Send Message'
-                    )}
-                  </Button>
+                  <div className="space-y-3">
+                    <Button 
+                      type="submit" 
+                      className="w-full bg-blue-600 hover:bg-blue-700 text-white transition-colors"
+                      disabled={isSubmitting}
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" /> 
+                          Opening Email Client...
+                        </>
+                      ) : (
+                        <>
+                          <Mail className="mr-2 h-4 w-4" />
+                          Send via Email Client
+                        </>
+                      )}
+                    </Button>
+                    
+                    <Button 
+                      type="button"
+                      variant="outline"
+                      onClick={handleDirectEmail}
+                      className="w-full border-blue-600 text-blue-400 hover:bg-blue-600 hover:text-white transition-colors"
+                    >
+                      <Mail className="mr-2 h-4 w-4" />
+                      Send Direct Email
+                    </Button>
+                  </div>
                 </form>
               </Form>
             </div>
