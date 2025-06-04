@@ -20,22 +20,28 @@ const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ projects }) => {
     <div className="container mx-auto mt-20">
       <h3 className="text-2xl font-bold mb-8 text-white">Featured Projects</h3>
       
-      <Carousel
-        opts={{ 
-          align: "center", 
-          loop: true,
-          containScroll: "trimSnaps"
-        }}
-        className="w-full"
-      >
-        <CarouselContent className="-ml-2 md:-ml-4">
-          {featuredProjects.map((project) => (
-            <FeaturedProject key={project.id} project={project} />
-          ))}
-        </CarouselContent>
-        <CarouselPrevious className="left-2" />
-        <CarouselNext className="right-2" />
-      </Carousel>
+      <div className="relative">
+        <Carousel
+          opts={{ 
+            align: "center", 
+            loop: true,
+            containScroll: "trimSnaps"
+          }}
+          className="w-full"
+        >
+          <CarouselContent className="-ml-2 md:-ml-4">
+            {featuredProjects.map((project) => (
+              <FeaturedProject key={project.id} project={project} />
+            ))}
+          </CarouselContent>
+          <CarouselPrevious className="left-2 bg-blue-900/50 border-blue-500/30 hover:bg-blue-800/70" />
+          <CarouselNext className="right-2 bg-blue-900/50 border-blue-500/30 hover:bg-blue-800/70" />
+        </Carousel>
+        
+        {/* Side fade overlays to make side projects barely visible */}
+        <div className="absolute left-0 top-0 bottom-0 w-32 md:w-48 bg-gradient-to-r from-gray-900 to-transparent pointer-events-none z-10"></div>
+        <div className="absolute right-0 top-0 bottom-0 w-32 md:w-48 bg-gradient-to-l from-gray-900 to-transparent pointer-events-none z-10"></div>
+      </div>
     </div>
   );
 };
