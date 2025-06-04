@@ -21,10 +21,14 @@ const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ projects }) => {
       <h3 className="text-2xl font-bold mb-8 text-white">Featured Projects</h3>
       
       <Carousel
-        opts={{ align: "start", loop: true }}
+        opts={{ 
+          align: "center", 
+          loop: true,
+          containScroll: "trimSnaps"
+        }}
         className="w-full"
       >
-        <CarouselContent>
+        <CarouselContent className="-ml-2 md:-ml-4">
           {featuredProjects.map((project) => (
             <FeaturedProject key={project.id} project={project} />
           ))}

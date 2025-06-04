@@ -13,9 +13,9 @@ interface FeaturedProjectProps {
 
 const FeaturedProject: React.FC<FeaturedProjectProps> = ({ project }) => {
   return (
-    <CarouselItem key={project.id} className="md:basis-1/2 lg:basis-1/3">
+    <CarouselItem className="pl-2 md:pl-4 basis-[85%] md:basis-[70%]">
       <div className="p-1">
-        <Card className="overflow-hidden bg-gradient-to-br from-blue-900/30 to-blue-900/10 border border-blue-900/40 h-64">
+        <Card className="overflow-hidden bg-gradient-to-br from-blue-900/30 to-blue-900/10 border border-blue-900/40 h-80 md:h-96">
           <div className="relative h-full overflow-hidden">
             <img 
               src={project.image} 
@@ -23,29 +23,29 @@ const FeaturedProject: React.FC<FeaturedProjectProps> = ({ project }) => {
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent flex flex-col justify-end">
-              <div className="p-4">
-                <h3 className="text-lg font-medium text-white mb-1">
-                  {project.title.length > 20 ? `${project.title.substring(0, 20)}...` : project.title}
+              <div className="p-4 md:p-6">
+                <h3 className="text-xl md:text-2xl font-medium text-white mb-2">
+                  {project.title}
                 </h3>
-                <p className="text-xs text-gray-300 line-clamp-2 mb-3">{project.description}</p>
+                <p className="text-sm md:text-base text-gray-300 line-clamp-3 mb-4">{project.description}</p>
                 <div className="flex justify-between items-center">
-                  <p className="text-xs text-gray-400">{project.technologies.slice(0, 3).join(", ")}</p>
-                  <div className="flex items-center space-x-2">
+                  <p className="text-sm text-gray-400">{project.technologies.slice(0, 3).join(", ")}</p>
+                  <div className="flex items-center space-x-3">
                     {project.githubUrl && (
                       <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white">
-                        <Github size={16} />
+                        <Github size={20} />
                       </a>
                     )}
                     {project.liveUrl && (
                       <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white">
-                        <Globe size={16} />
+                        <Globe size={20} />
                       </a>
                     )}
                     <Dialog>
                       <DialogTrigger asChild>
-                        <button className="text-blue-400 hover:text-blue-300 transition-colors text-xs flex items-center">
+                        <button className="text-blue-400 hover:text-blue-300 transition-colors text-sm flex items-center">
                           View Details
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
                             <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
                           </svg>
                         </button>
